@@ -10,7 +10,7 @@ def select_all():
 
     return result
 
-def listado_clientes():
+def listado_clientes(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$group': {
@@ -31,7 +31,12 @@ def listado_clientes():
         '$sort': {
             'customerID':1
         }
-    }
+    }, {
+                '$skip': int(pagina)*25
+            },
+        {
+            '$limit': 25
+        }
     ])
     return result 
 
