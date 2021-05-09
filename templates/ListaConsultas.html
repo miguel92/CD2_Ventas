@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row" style="margin-top:20px">
+    <div class="col-lg-3">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+              Listado de clientes
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">N&uacute;mero de compras por categoria</a>
+            <a href="#" class="list-group-item list-group-item-action">Listado de productos cliente/categoría</a>
+            <a href="#" class="list-group-item list-group-item-action">Listado de productos dada una categoría</a>
+            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Listado de productos dada un Departamento</a>
+            <a href="#" class="list-group-item list-group-item-action">Productos más vendidos por categoría</a>
+            <a href="#" class="list-group-item list-group-item-action">Productos más vendidos por Departamento</a>
+            <a href="#" class="list-group-item list-group-item-action">Productos más caros por categoría</a>
+            <a href="#" class="list-group-item list-group-item-action">Productos más caros por Departamento</a>
+            <a href="#" class="list-group-item list-group-item-action">Productos más vendidos por fechas</a>
+            <a href="#" class="list-group-item list-group-item-action">Listado de items que ha comprado un cliente por fecha</a>
+            <a href="#" class="list-group-item list-group-item-action">Total de ventas por cada zona geográfica</a>
+            <a href="#" class="list-group-item list-group-item-action">Zona geográfica con más compras</a>
+          </div>
+    </div>
+
+    <div class="col-lg-9">
+        contenido
+    </div>
+
+</div>
+<br/>
+<br/>
+<br/>
+
+{% endblock content %}
+
+{% block javascript%}
+
+    $(".btn-descargar").on("click",function(evt){
+				evt.preventDefault();
+                var fd = new FormData();
+		        var files = $(this).attr("data-name");
+                var enctype = $(this).attr("data-enctype");
+                fd.append('fichero',files);
+                fd.append('enctype',enctype);
+
+		        $.ajax({
+		            url: '/descargar',
+		            type: 'post',
+                    data: fd,
+		            contentType: false,
+		            processData: false,
+		            success: function(response){
+		                if(response != 0){
+							console.log(response);
+                            var obj = JSON.parse(response)
+                            alert("Enlace: " + obj.enlace);
+		                }else{
+		                	alert("Error al cargar el fichero");
+		                }
+		            },
+		        });
+	    	})
+
+
+{% endblock javascript%}
