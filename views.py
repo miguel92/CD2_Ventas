@@ -5,8 +5,8 @@ def buscar_todos():
     datos = select_all()
     return datos
 
-def listado_clients():
-    datos = listado_clientes()
+def listado_clients(pagina):
+    datos = listado_clientes(pagina)
     return datos
 
 def listado_clients_recomendador():

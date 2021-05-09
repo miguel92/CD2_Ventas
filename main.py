@@ -1,6 +1,9 @@
 
 from flask import Flask, render_template, request, redirect, url_for, session
 from views import *
+import json
+from bson.json_util import dumps
+
 
 
 app = Flask(__name__, static_url_path='/static')
@@ -34,7 +37,20 @@ def seleccionar(customerID):
 @app.route('/recomendar/customerID=<customerID>/category=<Category>/product=<Item>', methods=['POST', 'GET'])
 def recomendar(customerID, Category, Item):  
     productos = productos_categoria_recomendar_cliente(Category, Item)
-    return render_template('recomendarLista.html', datos=productos)    
+    return render_template('recomendarLista.html', datos=productos)       
+
+@app.route('/consulta_uno', methods=['POST', 'GET'])
+def consulta_uno():
+    response = {"estado": False}
+
+    if request.form:
+        pagina = request.form['pagina']
+        response = listado_clients(pagina)
+        list_cur = list(response)
+    obj = {"datos": list_cur,"cur_pagina":pagina, "max_pagina":672}
+    response = json.dumps(obj)
+    print(obj)
+    return response
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
