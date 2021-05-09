@@ -13,8 +13,18 @@ def index():
 
 @app.route('/todos')
 def todos():
-    datos = buscar_todos()
+    datos = items_cliente_por_categoria()
     return render_template('todos.html', datos=datos)
+
+@app.route('/consulta')
+def consulta():
+    #datos = buscar_todos()
+    return render_template('ListaConsultas.html')    
+
+@app.route('/recomendador')
+def recomendador():
+    datos = buscar_todos()
+    return render_template('todos.html', datos=datos)      
 
 
 if __name__ == '__main__':
