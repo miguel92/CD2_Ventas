@@ -1,7 +1,10 @@
 import pymongo as pymongo
+from credentials import *
 
+client = MongoClient(servidor_url)
+filter={}
 
-client = pymongo.MongoClient("mongodb+srv://spea:grupodetres@cluster0.uscnp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-db = client['ServerFiles']
+result = client['Tienda']['Ventas_Cleaned'].find(filter=filter)
+
 
 
