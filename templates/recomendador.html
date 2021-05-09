@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+	    <div class="offset-lg-3 col-md-6 text-center">
+        <h4 class="w-100 font-weight-bold">Lista de registros</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Acci&oacute;n</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for value in datos %}
+            <tr>
+              <th scope="row">{{value['customerID']}}</th>
+              <td>{{value['customerName']}}</td>
+              <td><a class="nav-link" href="/seleccionar/customerID={{value['customerID']}}"> Seleccionar </a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+	    </div>
+</div>
+<br/>
+<br/>
+<br/>
+
+{% endblock content %}
+
+{% block javascript%}
+
+{% endblock javascript%}

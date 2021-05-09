@@ -35,6 +35,29 @@ def listado_clientes():
     ])
     return result 
 
+def listado_clientes_recomendador():
+    result = client['Tienda']['Ventas_Cleaned'].aggregate([
+    {
+        '$group': {
+            '_id': {
+                'Customer_ID': '$Customer_ID', 
+                'Customer_name': '$Customer_Name'
+            }
+        }
+    }, {
+        '$project': {
+            '_id': 0, 
+            'customerID': '$_id.Customer_ID', 
+            'customerName': '$_id.Customer_name'
+        }
+    }, {
+        '$sort': {
+            'customerID':1
+        }
+    }
+    ])
+    return result 
+
 def compras_categoria():
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
@@ -350,3 +373,40 @@ def zona_max_compras():
     }
     ])
     return result     
+
+def items_comprado_cliente_id(customerID):
+    result = client['Tienda']['Ventas_Cleaned'].aggregate([{
+        '$match': {
+            'Customer_ID': int(customerID)
+        }
+    }, {
+        '$group': {
+            '_id': {
+                'Customer_ID': '$Customer_ID'
+            }, 
+            'Items': {
+                '$push': '$$ROOT'
+            }
+        }
+    }, {
+        '$project': {
+            '_id': 0,  
+            'Items': 1
+        }
+    }, {
+        '$sort': {
+            'Customer_ID': -1
+        }
+    }
+    ])
+    return result
+
+def productos_categoria_recomendar(category, product):
+    result = client['Tienda']['Ventas_Cleaned'].aggregate([{
+        '$match': {
+            'Category': category,
+            'product': {'$ne': product}
+        }
+    }
+    ])
+    return result

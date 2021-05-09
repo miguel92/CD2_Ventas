@@ -23,9 +23,18 @@ def consulta():
 
 @app.route('/recomendador')
 def recomendador():
-    datos = buscar_todos()
-    return render_template('todos.html', datos=datos)      
+    datos = listado_clients_recomendador()
+    return render_template('recomendador.html', datos=datos)    
 
+@app.route('/seleccionar/customerID=<customerID>', methods=['POST', 'GET'])
+def seleccionar(customerID):  
+    productos = items_comprado_cliente_id(customerID)
+    return render_template('productos.html', datos=productos)
+
+@app.route('/recomendar/customerID=<customerID>/category=<Category>/product=<Item>', methods=['POST', 'GET'])
+def recomendar(customerID, Category, Item):  
+    productos = productos_categoria_recomendar_cliente(Category, Item)
+    return render_template('recomendarLista.html', datos=productos)    
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)

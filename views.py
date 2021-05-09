@@ -9,6 +9,10 @@ def listado_clients():
     datos = listado_clientes()
     return datos
 
+def listado_clients_recomendador():
+    datos = listado_clientes_recomendador()
+    return datos    
+
 def compras_por_categoria():
     datos = compras_categoria()
     return datos
@@ -51,4 +55,12 @@ def items_comprado_cliente_por_fecha():
 
 def total_ventas_por_zona():
     datos = total_ventas_zona()
+    return datos
+
+def items_comprado_cliente_por_id(customerID):
+    datos = items_comprado_cliente_id(customerID)
+    return datos
+
+def productos_categoria_recomendar_cliente(category, product):
+    datos = productos_categoria_recomendar(category, product)
     return datos
