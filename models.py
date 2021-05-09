@@ -1,10 +1,12 @@
-import pymongo as pymongo
+from pymongo import MongoClient
 from credentials import *
 
 client = MongoClient(servidor_url)
-filter={}
-
-result = client['Tienda']['Ventas_Cleaned'].find(filter=filter)
 
 
+def select_all():
+    filter = {}
+    result = client['Tienda']['Ventas_Cleaned'].find(filter=filter).limit(10)
+
+    return result
 
