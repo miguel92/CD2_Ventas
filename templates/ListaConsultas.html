@@ -4,21 +4,19 @@
 <div class="row" style="margin-top:20px">
     <div class="col-lg-3">
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active consulta_uno" data-page="0" aria-current="true">
-              Listado de clientes
-            </a>
-            <a href="#" class="list-group-item list-group-item-action" >N&uacute;mero de compras por categoria</a>
-            <a href="#" class="list-group-item list-group-item-action">Listado de productos cliente/categoría</a>
-            <a href="#" class="list-group-item list-group-item-action">Listado de productos dada una categoría</a>
-            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Listado de productos dada un Departamento</a>
-            <a href="#" class="list-group-item list-group-item-action">Productos más vendidos por categoría</a>
-            <a href="#" class="list-group-item list-group-item-action">Productos más vendidos por Departamento</a>
-            <a href="#" class="list-group-item list-group-item-action">Productos más caros por categoría</a>
-            <a href="#" class="list-group-item list-group-item-action">Productos más caros por Departamento</a>
-            <a href="#" class="list-group-item list-group-item-action">Productos más vendidos por fechas</a>
-            <a href="#" class="list-group-item list-group-item-action">Listado de items que ha comprado un cliente por fecha</a>
-            <a href="#" class="list-group-item list-group-item-action">Total de ventas por cada zona geográfica</a>
-            <a href="#" class="list-group-item list-group-item-action">Zona geográfica con más compras</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_uno" data-page="0" aria-current="true">Listado de clientes</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_dos" data-page="0">N&uacute;mero de compras por categoria</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_tres" data-page="0">Listado de productos cliente/categoría</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_cuatro" data-page="0">Listado de productos dada una categoría</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_cinco" data-page="0" aria-disabled="true">Listado de productos dada un Departamento</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_seis" data-page="0">Productos más vendidos por categoría</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_siete" data-page="0">Productos más vendidos por Departamento</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_ocho" data-page="0">Productos más caros por categoría</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_nueve" data-page="0">Productos más caros por Departamento</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_diez" data-page="0">Productos más vendidos por fechas</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_once" data-page="0">Listado de items que ha comprado un cliente por fecha</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_doce" data-page="0">Total de ventas por cada zona geográfica</a>
+            <a href="#" class="list-group-item list-group-item-action consulta_trece" data-page="0">Zona geográfica con más compras</a>
           </div>
     </div>
 
@@ -34,54 +32,6 @@
 {% endblock content %}
 
 {% block javascript%}
-    asignarEventoUno();
-    function asignarEventoUno(){
-    $(".consulta_uno").on("click",function(evt){
-				evt.preventDefault();
-                var fd = new FormData();
-		        var pagina = $(this).attr("data-page");
-                fd.append('pagina',pagina);
-
-		        $.ajax({
-		            url: '/consulta_uno',
-		            type: 'post',
-                    data: fd,
-		            contentType: false,
-		            processData: false,
-		            success: function(response){
-		                if(response != 0){
-                            var obj = JSON.parse(response)
-                            console.log(obj);
-
-                            html = '<table class="table"><thead><tr><th scope="col">Id</th><th scope="col">Nombre Cliente</th><th scope="col">Segmento</th></tr></thead>';
-                            html += '<tbody>';
-                            for(var i = 0; i < obj.datos.length;i++){
-                                html += '<tr><th scope="row">'+obj.datos[i].customerID+'</th><td>'+obj.datos[i].customerName+'</td><td>'+obj.datos[i].customerSegment+'</td></tr>';
-                            }
-                            html +='</tbody></table>';
-                            html +='<nav aria-label="..."><ul class="pagination pagination-sm">';
-                            if(parseInt(obj.cur_pagina) == 0){
-                                html +='<li class="page-item disabled"><a class="page-link consulta_uno" href="#" tabindex="-1" data-page="'+(parseInt(obj.cur_pagina)-1)+'">Anterior</a></li>'
-                            }else{
-                                html +='<li class="page-item"><a class="page-link consulta_uno" href="#" tabindex="-1" data-page="'+(parseInt(obj.cur_pagina)-1)+'">Anterior</a></li>'
-                            }
-                            html +='<li class="page-item"><a class="page-link consulta_uno" href="#" tabindex="-1" data-page="'+(parseInt(obj.cur_pagina))+'">'+ (parseInt(obj.cur_pagina)+parseInt(1)) +'</a></li>';
-                            html +='<li class="page-item"><a class="page-link consulta_uno" href="#" data-page="'+(parseInt(obj.cur_pagina)+parseInt(1))+'">'+(parseInt(obj.cur_pagina)+parseInt(2))+'</a></li>';
-                            html +='<li class="page-item"><a class="page-link consulta_uno" href="#" data-page="'+(parseInt(obj.cur_pagina)+parseInt(2))+'">'+(parseInt(obj.cur_pagina)+parseInt(3))+'</a></li>';
-                            if(parseInt(obj.cur_pagina) < parseInt(obj.max_pagina)){
-                            html +='<li class="page-item"><a class="page-link consulta_uno" href="#" data-page="'+(parseInt(obj.cur_pagina)+3)+'">Siguiente</a></li>';
-                            }else{
-                                html +='<li class="page-item disabled"><a class="page-link consulta_uno" href="#" data-page="'+(parseInt(obj.cur_pagina)+3)+'">Siguiente</a></li>';
-                            }
-                            html +='</ul></nav>';
-                            $('#contenido_consulta').html(html);
-                            asignarEventoUno();
-		                }else{
-		                	alert("Error");
-		                }
-		            },
-		        });
-	    	})
-    }
 
 {% endblock javascript%}
+

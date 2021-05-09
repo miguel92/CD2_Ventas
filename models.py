@@ -63,7 +63,7 @@ def listado_clientes_recomendador():
     ])
     return result 
 
-def compras_categoria():
+def compras_categoria(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$group': {
@@ -82,7 +82,12 @@ def compras_categoria():
         '$sort': {
             'Category': 1
         }
-    }
+    }, {
+                '$skip': int(pagina)*25
+            },
+        {
+            '$limit': 25
+        }
     ])
     return result
 

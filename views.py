@@ -13,8 +13,8 @@ def listado_clients_recomendador():
     datos = listado_clientes_recomendador()
     return datos    
 
-def compras_por_categoria():
-    datos = compras_categoria()
+def compras_por_categoria(pagina):
+    datos = compras_categoria(pagina)
     return datos
 
 def items_cliente_por_categoria():
