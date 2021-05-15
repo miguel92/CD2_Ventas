@@ -1,29 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row">
-	    <div class="offset-lg-3 col-md-6 text-center">
-        <h4 class="w-100 font-weight-bold">Lista de registros</h4>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Fecha Subida</th>
-              <th scope="col">Acci&oacute;n</th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for value in datos %}
-            <tr>
-              <th scope="row">{{loop.index}}</th>
-              <td>{{value}}</td>
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
+<i style="font-size: small;">El siguiente correo sería enviado a la persona seleccionado recomendando productos de la misma categoría del producto elegido.</i>
+<div class="card" style="margin-top: 40px;margin-left: 40px;">
 
-	    </div>
+  <h4>¡Hola <strong>{{cliente[0]['Customer_Name']}}</strong>!</h4>
+  <p>Vemos que has comprado recientemente el producto <strong>{{producto_pasado}}</strong>, 
+    estamos seguros de que estos productos le podrían interesar:
+  </p>
+  <ul style="margin-left: 40px;" >
+  {% for value in datos %}
+    <li>{{value['Item']}}</li>
+  {% endfor %}
+  </ul>
+  <p>Gracias por la confianza depositada en nosotros, ¡un saludo!</p>
 </div>
 <br/>
 <br/>

@@ -64,6 +64,11 @@ def items_comprado_cliente_por_id(customerID):
 def productos_categoria_recomendar_cliente(category, product):
     datos = productos_categoria_recomendar(category, product)
     return datos
+
+def get_name_by_id(customerID):
+    datos = get_nombre_by_id(customerID)
+    return datos
+
 def zona_max_compra(pagina):
     datos = zona_max_compras(pagina)
     return datos
@@ -97,3 +102,4 @@ def lista_consulta(consulta, pagina, filtro = None):
         return total_ventas_por_zona(pagina)
     elif consulta == 12: # Total de ventas por zona
         return zona_max_compras(pagina)
+
