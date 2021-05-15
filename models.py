@@ -195,25 +195,27 @@ def productos_maxvendidos_categoria(pagina):
             '_id': {
                 'Item': '$Item'
             }, 
-            'number': {
+            'num_ventas': {
                 '$sum': 1
+            },
+            'Categoria': {
+                '$first': '$Category'
             }
         }
     }, {
         '$project': {
             '_id': 0, 
             'Item': '$_id.Item', 
-            'number': 1
+            'num_ventas': 1,
+            'Categoria':1
         }
     }, {
         '$sort': {
-            'number': -1
+            'num_ventas': -1
         }
-    }, {
-                '$skip': int(pagina)*25
-            },
+    }, 
         {
-            '$limit': 25
+            '$limit': 1
         }
     ])
     return result
@@ -229,23 +231,25 @@ def productos_maxvendidos_departamento(pagina):
             '_id': {
                 'Item': '$Item'
             }, 
-            'number': {
+            'num_ventas': {
                 '$sum': 1
+            },
+            'Departamento': {
+                '$first': '$Department'
             }
         }
     }, {
         '$project': {
             '_id': 0, 
             'Item': '$_id.Item', 
-            'number': 1
+            'num_ventas': 1,
+            'Departamento':1
         }
     }, {
         '$sort': {
-            'number': -1
+            'num_ventas': -1
         }
-    }, {
-                '$skip': int(pagina)*25
-            },
+    }, 
         {
             '$limit': 1
         }
@@ -264,8 +268,22 @@ def productos_maxcaros_categoria(pagina):
             }
         }
     }, {
+        '$unwind': {
+            'path': '$Items'
+        }
+    }, {
         '$sort': {
             'Items.Unit Price': -1
+        }
+    }, {
+        '$group': {
+            '_id': '$_id', 
+            'Maximo': {
+                '$max': '$Items.Unit Price'
+            }, 
+            'Item': {
+                '$first': '$Items.Item'
+            }
         }
     }
     ])
@@ -283,11 +301,25 @@ def productos_maxcaros_departamento(pagina):
             }
         }
     }, {
+        '$unwind': {
+            'path': '$Items'
+        }
+    }, {
         '$sort': {
             'Items.Unit Price': -1
         }
+    }, {
+        '$group': {
+            '_id': '$_id', 
+            'Maximo': {
+                '$max': '$Items.Unit Price'
+            }, 
+            'Item': {
+                '$first': '$Items.Item'
+            }
+        }
     }
-    ])
+])
     return result
 
 def productos_maxvendidos_fecha(pagina):
