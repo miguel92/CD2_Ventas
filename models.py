@@ -39,8 +39,8 @@ def listado_clientes(pagina):
         {
             '$limit': 25
         }
-    ])
-    return result 
+    ]).distinct('customerID')
+    return result
 
 def listado_clientes_recomendador():
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
@@ -322,7 +322,11 @@ def productos_maxcaros_departamento(pagina):
 ])
     return result
 
-def productos_maxvendidos_fecha(pagina):
+def productos_maxvendidos_fecha(pagina,filtro):
+    filtroSplit = filtro.split('-')
+    dia = int(filtroSplit[0])
+    mes = int(filtroSplit[1])
+    ano = int(filtroSplit[2])
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$addFields': {
@@ -336,7 +340,7 @@ def productos_maxvendidos_fecha(pagina):
     }, {
         '$match': {
             'Fecha_ISO': {
-                '$gt': datetime(2011, 8, 11, 0, 0, 0, tzinfo=timezone.utc)
+                '$gt': datetime(ano, mes, dia, 0, 0, 0, tzinfo=timezone.utc)
             }
         }
     }, {
@@ -364,7 +368,11 @@ def productos_maxvendidos_fecha(pagina):
     ])
     return result
 
-def items_comprado_cliente_fecha(pagina):
+def items_comprado_cliente_fecha(pagina, filtro, filtro2):
+    filtroSplit = filtro.split('-')
+    dia = int(filtroSplit[0])
+    mes = int(filtroSplit[1])
+    ano = int(filtroSplit[2])
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$addFields': {
@@ -378,8 +386,9 @@ def items_comprado_cliente_fecha(pagina):
     }, {
         '$match': {
             'Fecha_ISO': {
-                '$gt': datetime(2011, 8, 11, 0, 0, 0, tzinfo=timezone.utc)
-            }
+                '$gt': datetime(ano, mes, dia, 0, 0, 0, tzinfo=timezone.utc)
+            },
+            'Customer_ID': filtro2
         }
     }, {
         '$group': {
