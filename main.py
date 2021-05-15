@@ -37,7 +37,8 @@ def seleccionar(customerID):
 @app.route('/recomendar/customerID=<customerID>/category=<Category>/product=<Item>', methods=['POST', 'GET'])
 def recomendar(customerID, Category, Item):  
     productos = productos_categoria_recomendar_cliente(Category, Item)
-    return render_template('recomendarLista.html', datos=productos)       
+    cliente = get_name_by_id(customerID)
+    return render_template('recomendarLista.html', datos=productos, cliente=cliente, producto_pasado=Item)       
 
 @app.route('/consulta_uno', methods=['POST', 'GET'])
 def consulta_uno():

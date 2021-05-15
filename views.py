@@ -64,3 +64,7 @@ def items_comprado_cliente_por_id(customerID):
 def productos_categoria_recomendar_cliente(category, product):
     datos = productos_categoria_recomendar(category, product)
     return datos
+
+def get_name_by_id(customerID):
+    datos = get_nombre_by_id(customerID)
+    return datos

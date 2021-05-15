@@ -1,5 +1,7 @@
 from pymongo import MongoClient
 from credentials import *
+from bson.json_util import dumps
+import json
 
 client = MongoClient(servidor_url)
 
@@ -407,11 +409,41 @@ def items_comprado_cliente_id(customerID):
     return result
 
 def productos_categoria_recomendar(category, product):
-    result = client['Tienda']['Ventas_Cleaned'].aggregate([{
+    result = client['Tienda']['Ventas_Cleaned'].aggregate([
+    {
         '$match': {
-            'Category': category,
-            'product': {'$ne': product}
+            'Category': category, 
+            'Item': {
+                '$ne': product
+            }
         }
+    }, {
+        '$group': {
+            '_id': '$Item'
+        }
+    },{
+        '$project': {
+            'Item': '$_id'
+        }
+    }, {
+        '$limit': 5
     }
-    ])
+])
     return result
+
+def get_nombre_by_id(customerID):
+    filter={
+    'Customer_ID': int(customerID)
+    }
+    project={
+        'Customer_Name': 1
+    }
+    limit=1
+
+    result = client['Tienda']['Ventas_Cleaned'].find(
+    filter=filter,
+    projection=project,
+    limit=limit
+    )
+    list_cur = list(result)
+    return list_cur
