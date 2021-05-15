@@ -278,12 +278,30 @@ def productos_maxcaros_categoria(pagina):
     }, {
         '$group': {
             '_id': '$_id', 
-            'Maximo': {
-                '$max': '$Items.Unit Price'
+            'Maximo (€)': {
+                '$max': '$Items.Unit_Price'
             }, 
             'Item': {
                 '$first': '$Items.Item'
+            },
+            'Categoria': {
+                '$first': '$Items.Category'
             }
+
+        }
+    },
+    {
+        '$project': {
+            'Maximo (€)': 1, 
+            'Item': 1, 
+            '_id': 0,
+            'Categoria':1
+        }
+    },
+    {
+        '$sort' : 
+        {
+            'Maximo (€)':-1
         }
     }
     ])
@@ -311,14 +329,31 @@ def productos_maxcaros_departamento(pagina):
     }, {
         '$group': {
             '_id': '$_id', 
-            'Maximo': {
-                '$max': '$Items.Unit Price'
+            'Maximo (€)': {
+                '$max': '$Items.Unit_Price'
             }, 
             'Item': {
                 '$first': '$Items.Item'
+            },
+            'Departamento': {
+                '$first': '$Items.Department'
             }
         }
-    }
+    },
+    {
+        '$project': {
+            'Maximo (€)': 1, 
+            'Item': 1, 
+            '_id': 0,
+            'Departamento':1
+        }
+    },
+    {
+        '$sort' : 
+        {
+            'Maximo (€)':-1
+        }
+    }    
 ])
     return result
 
