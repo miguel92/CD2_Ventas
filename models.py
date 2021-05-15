@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from credentials import *
 from bson.json_util import dumps
 import json
+import pandas
 
 client = MongoClient(servidor_url)
 
@@ -26,12 +27,12 @@ def listado_clientes(pagina):
     }, {
         '$project': {
             '_id': 0, 
-            'customerID': '$_id.Customer_ID', 
-            'customerName': '$_id.Customer_name'
+            'ID_Cliente': '$_id.Customer_ID', 
+            'Nombre_cliente': '$_id.Customer_name'
         }
     }, {
         '$sort': {
-            'customerID':1
+            'ID_Cliente':1
         }
     }, {
                 '$skip': int(pagina)*25
@@ -70,19 +71,19 @@ def compras_categoria(pagina):
     {
         '$group': {
             '_id': '$Category', 
-            'Num_sales': {
+            'Num_ventas': {
                 '$sum': 1
             }
         }
     }, {
         '$project': {
             '_id': 0, 
-            'Category': '$_id', 
-            'Num_sales': 1
+            'Categoria': '$_id', 
+            'Num_ventas': 1
         }
     }, {
         '$sort': {
-            'Category': 1
+            'Categoria': 1
         }
     }, {
                 '$skip': int(pagina)*25

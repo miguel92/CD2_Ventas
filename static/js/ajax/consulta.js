@@ -23,9 +23,9 @@
                             html += '<th scope="row">#</th>'
 
                             if (obj.consulta == 2){
-                                html +='<th scope="col">Customer_ID</th>';
-                                html +='<th scope="col">Category</th>';
-                                html +='<th scope="col">Items</th>';
+                                html +='<th scope="col">ID_cliente</th>';
+                                html +='<th scope="col">Categoria</th>';
+                                html +='<th scope="col">Productos</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 
@@ -42,15 +42,15 @@
                                         html +='</tr>'
                                 }
                             }else if (obj.consulta == 3){
-                                html +='<th scope="col">Category</th>';
-                                html +='<th scope="col">Items</th>';
+                                html +='<th scope="col">Categoria</th>';
+                                html +='<th scope="col">Productos</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 
                                 for(var i = 0; i < obj.datos.length;i++){
                                         html += '<tr>'
                                         html += '<th scope="row">'+i+'</th>'
-                                        html += '<td scope="row">'+obj.datos[i]._id.Category+'</td>';
+                                        html += '<td scope="row">'+obj.datos[i]._id+'</td>';
                                         html +='<td><ul>';
                                         for(var j = 0; j < obj.datos[i].Items.length;j++){
                                             html += '<li>' +obj.datos[i].Items[j].Item + ' </li>';
@@ -60,8 +60,8 @@
                                 }
                             }
                             else if (obj.consulta == 4){
-                                html +='<th scope="col">Departament</th>';
-                                html +='<th scope="col">Items</th>';
+                                html +='<th scope="col">Departamento</th>';
+                                html +='<th scope="col">Productos</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 
@@ -78,8 +78,8 @@
                                 }
                             }
                             else if (obj.consulta == 10){
-                                html +='<th scope="col">Customer_ID</th>';
-                                html +='<th scope="col">Items</th>';
+                                html +='<th scope="col">ID_cliente</th>';
+                                html +='<th scope="col">Productos</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 
