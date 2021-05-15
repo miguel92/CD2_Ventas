@@ -119,9 +119,16 @@ def items_cliente_categoria(pagina):
     ])
     return result 
 
-def listado_productos_categoria(pagina):
+def listado_productos_categoria(pagina,filtro):
+    print(filtro)
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
-    {
+        {
+            '$match': {
+                'Category': filtro
+            }
+        },
+        {
+
         '$project': {
             'Category': 1, 
             'Item': 1
@@ -144,9 +151,15 @@ def listado_productos_categoria(pagina):
     ])
     return result
 
-def listado_productos_departamento(pagina):
+def listado_productos_departamento(pagina, filtro):
+    print(filtro)
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
-    {
+        {
+            '$match': {
+                'Department': filtro
+            }
+        },
+        {
         '$project': {
             'Department': 1, 
             'Item': 1

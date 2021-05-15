@@ -88,5 +88,23 @@ def consultas():
     return response
 
 
+@app.route('/consultas_filter', methods=['POST', 'GET'])
+def consultas_filter():
+    response = {"estado": False}
+
+    if request.form:
+        pagina = request.form['pagina']
+        consulta = request.form['consulta']
+        filtro = None
+
+        filtro = request.form['filtro']
+        response = lista_consulta(consulta,pagina,filtro)
+        list_cur = list(response)
+    obj = {"datos": list_cur,"cur_pagina":pagina, "consulta": consulta, "max_pagina":672}
+    response = json.dumps(obj, default=json_util.default)
+
+    return response
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8090, debug=True)

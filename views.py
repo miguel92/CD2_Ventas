@@ -69,7 +69,7 @@ def zona_max_compra(pagina):
     return datos
 
 
-def lista_consulta(consulta, pagina):
+def lista_consulta(consulta, pagina, filtro = None):
     consulta = int(consulta)
     if consulta == 0: # Listado Clientes
         return listado_clients(pagina)
@@ -78,9 +78,9 @@ def lista_consulta(consulta, pagina):
     elif consulta == 2:
         return items_cliente_por_categoria(pagina)
     elif consulta == 3:
-        return listado_productos_categoria(pagina)
+        return listado_productos_categoria(pagina, filtro)
     elif consulta == 4:
-        return listado_productos_departamento(pagina)
+        return listado_productos_departamento(pagina,filtro)
     elif consulta == 5:
         return productos_maxvendidos_categoria(pagina)
     elif consulta == 6:
