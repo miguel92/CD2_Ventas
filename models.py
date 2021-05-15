@@ -40,7 +40,7 @@ def listado_clientes(pagina):
         {
             '$limit': 25
         }
-    ]).distinct('customerID')
+    ])
     return result
 
 def listado_clientes_recomendador():
@@ -274,7 +274,7 @@ def productos_maxcaros_categoria(pagina):
         }
     }, {
         '$sort': {
-            'Items.Unit Price': -1
+            'Items.Unit_Price': -1
         }
     }, {
         '$group': {
@@ -282,7 +282,7 @@ def productos_maxcaros_categoria(pagina):
             'Maximo (€)': {
                 '$max': '$Items.Unit_Price'
             }, 
-            'Item': {
+            'Producto': {
                 '$first': '$Items.Item'
             },
             'Categoria': {
@@ -294,7 +294,7 @@ def productos_maxcaros_categoria(pagina):
     {
         '$project': {
             'Maximo (€)': 1, 
-            'Item': 1, 
+            'Producto': 1, 
             '_id': 0,
             'Categoria':1
         }
@@ -333,7 +333,7 @@ def productos_maxcaros_departamento(pagina):
             'Maximo (€)': {
                 '$max': '$Items.Unit_Price'
             }, 
-            'Item': {
+            'Producto': {
                 '$first': '$Items.Item'
             },
             'Departamento': {
@@ -344,7 +344,7 @@ def productos_maxcaros_departamento(pagina):
     {
         '$project': {
             'Maximo (€)': 1, 
-            'Item': 1, 
+            'Producto': 1, 
             '_id': 0,
             'Departamento':1
         }
@@ -424,7 +424,7 @@ def items_comprado_cliente_fecha(pagina, filtro, filtro2):
             'Fecha_ISO': {
                 '$gt': datetime(ano, mes, dia, 0, 0, 0, tzinfo=timezone.utc)
             },
-            'Customer_ID': filtro2
+            'Customer_ID': int(filtro2)
         }
     }, {
         '$group': {
@@ -459,7 +459,7 @@ def total_ventas_zona(pagina):
     {
         '$group': {
             '_id': '$Country_Region', 
-            'Num_sales': {
+            'Numero ventas': {
                 '$sum': 1
             }
         }
@@ -467,11 +467,11 @@ def total_ventas_zona(pagina):
         '$project': {
             '_id': 0, 
             'Region': '$_id', 
-            'Num_sales': 1
+            'Numero ventas': 1
         }
     }, {
         '$sort': {
-            'Num_sales': -1
+            'Numero ventas': -1
         }
     }, {
                 '$skip': int(pagina)*25
@@ -487,7 +487,7 @@ def zona_max_compras(pagina):
     {
         '$group': {
             '_id': '$Country_Region', 
-            'Num_sales': {
+            'Numero ventas': {
                 '$sum': 1
             }
         }
@@ -495,11 +495,11 @@ def zona_max_compras(pagina):
         '$project': {
             '_id': 0, 
             'Region': '$_id', 
-            'Num_sales': 1
+            'Numero ventas': 1
         }
     }, {
         '$sort': {
-            'Num_sales': -1
+            'Numero ventas': -1
         }
     }, {
         '$limit': 3

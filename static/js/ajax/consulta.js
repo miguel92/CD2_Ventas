@@ -41,60 +41,7 @@
                                         html +='</ul></td>'
                                         html +='</tr>'
                                 }
-                            }else if (obj.consulta == 3){
-                                html +='<th scope="col">Categoria</th>';
-                                html +='<th scope="col">Productos</th>';
-                                html +='</tr></thead>';
-                                html += '<tbody>';
-
-                                for(var i = 0; i < obj.datos.length;i++){
-                                        html += '<tr>'
-                                        html += '<th scope="row">'+i+'</th>'
-                                        html += '<td scope="row">'+obj.datos[i]._id+'</td>';
-                                        html +='<td><ul>';
-                                        for(var j = 0; j < obj.datos[i].Items.length;j++){
-                                            html += '<li>' +obj.datos[i].Items[j].Item + ' </li>';
-                                        }
-                                        html +='</ul></td>'
-                                        html +='</tr>'
-                                }
-                            }
-                            else if (obj.consulta == 4){
-                                html +='<th scope="col">Departamento</th>';
-                                html +='<th scope="col">Productos</th>';
-                                html +='</tr></thead>';
-                                html += '<tbody>';
-
-                                for(var i = 0; i < obj.datos.length;i++){
-                                        html += '<tr>'
-                                        html += '<th scope="row">'+i+'</th>'
-                                        html += '<td scope="row">'+obj.datos[i]._id.Departament+'</td>';
-                                        html +='<td><ul>';
-                                        for(var j = 0; j < obj.datos[i].Items.length;j++){
-                                            html += '<li>' +obj.datos[i].Items[j].Item + ' </li>';
-                                        }
-                                        html +='</ul></td>'
-                                        html +='</tr>'
-                                }
-                            }
-                            else if (obj.consulta == 10){
-                                html +='<th scope="col">ID_cliente</th>';
-                                html +='<th scope="col">Productos</th>';
-                                html +='</tr></thead>';
-                                html += '<tbody>';
-
-                                for(var i = 0; i < obj.datos.length;i++){
-                                        html += '<tr>'
-                                        html += '<th scope="row">'+i+'</th>'
-                                        html += '<td scope="row">'+obj.datos[i].Customer_ID+'</td>';
-                                        html +='<td><ul>';
-                                        for(var j = 0; j < obj.datos[i].Items.length;j++){
-                                            html += '<li>' +obj.datos[i].Items[j].Item + ' </li>';
-                                        }
-                                        html +='</ul></td>'
-                                        html +='</tr>'
-                                }
-                            }
+                            }                            
                             else{
                                 for(var i = 0; i < Object.keys(obj.datos[0]).length;i++){
                                     html +='<th scope="col">'+Object.keys(obj.datos[0])[i]+'</th>';
@@ -184,8 +131,8 @@
                             html += '<th scope="row">#</th>'
 
                             if (obj.consulta == 3){
-                                html +='<th scope="col">Category</th>';
-                                html +='<th scope="col">Items</th>';
+                                html +='<th scope="col">Categoria</th>';
+                                html +='<th scope="col">Productos</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 
@@ -202,8 +149,8 @@
                                 }
                             }
                             else if (obj.consulta == 4){
-                                html +='<th scope="col">Departament</th>';
-                                html +='<th scope="col">Items</th>';
+                                html +='<th scope="col">Departamento</th>';
+                                html +='<th scope="col">Productos</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 
@@ -219,9 +166,9 @@
                                         html +='</tr>'
                                 }
                             }else if (obj.consulta == 6){
-                                html +='<th scope="col">num_ventas</th>';
+                                html +='<th scope="col">Numero Ventas</th>';
                                 html +='<th scope="col">Departamento</th>';
-                                html +='<th scope="col">Item</th>';
+                                html +='<th scope="col">Producto</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 
@@ -236,9 +183,9 @@
                                         html +='</tr>'
                                 }
                             }else if (obj.consulta == 5){
-                                html +='<th scope="col">num_ventas</th>';
+                                html +='<th scope="col">Numero Ventas</th>';
                                 html +='<th scope="col">Categoria</th>';
-                                html +='<th scope="col">Item</th>';
+                                html +='<th scope="col">Producto</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 
@@ -255,7 +202,7 @@
                             }
                             else if (obj.consulta == 9){
                                 html +='<th scope="col">Numero Ventas</th>';
-                                html +='<th scope="col">Item</th>';
+                                html +='<th scope="col">Producto</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 
@@ -268,7 +215,7 @@
                                 }
                             }else if (obj.consulta == 10){
                                 html +='<th scope="col">ID Cliente</th>';
-                                html +='<th scope="col">Items</th>';
+                                html +='<th scope="col">Productos</th>';
                                 html +='</tr></thead>';
                                 html += '<tbody>';
 

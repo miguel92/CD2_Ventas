@@ -99,7 +99,7 @@ def consultas_filter():
 
         filtro = request.form['filtro']
         filtro2 = request.form['filtro2']
-        response = lista_consulta(consulta,pagina,filtro)
+        response = lista_consulta(consulta,pagina,filtro, filtro2)
         list_cur = list(response)
     obj = {"datos": list_cur,"cur_pagina":pagina, "consulta": consulta, "max_pagina":672}
     response = json.dumps(obj, default=json_util.default)
