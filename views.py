@@ -87,9 +87,9 @@ def lista_consulta(consulta, pagina, filtro = None):
     elif consulta == 4:
         return listado_productos_departamento(pagina,filtro)
     elif consulta == 5:
-        return productos_maxvendidos_categoria(pagina)
+        return productos_maxvendidos_categoria(pagina,filtro)
     elif consulta == 6:
-        return productos_maxvendidos_departamento(pagina)
+        return productos_maxvendidos_departamento(pagina,filtro)
     elif consulta == 7:
         return productos_maxcaros_categoria(pagina)
     elif consulta == 8:
