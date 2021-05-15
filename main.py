@@ -1,4 +1,4 @@
-
+from bson import json_util
 from flask import Flask, render_template, request, redirect, url_for, session
 from views import *
 import json
@@ -73,5 +73,20 @@ def consulta_dos():
     return response
 
 
+@app.route('/consultas', methods=['POST', 'GET'])
+def consultas():
+    response = {"estado": False}
+
+    if request.form:
+        pagina = request.form['pagina']
+        consulta = request.form['consulta']
+        response = lista_consulta(consulta,pagina)
+        list_cur = list(response)
+    obj = {"datos": list_cur,"cur_pagina":pagina, "consulta": consulta, "max_pagina":672}
+    response = json.dumps(obj, default=json_util.default)
+
+    return response
+
+
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='127.0.0.1', port=8090, debug=True)

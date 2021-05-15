@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from pymongo import MongoClient
 from credentials import *
 
@@ -15,17 +17,15 @@ def listado_clientes(pagina):
     {
         '$group': {
             '_id': {
-                'Customer_ID': '$Customer_ID', 
-                'Customer_name': '$Customer_Name', 
-                'Customer_segment': '$Customer_Segment'
+                'Customer_ID': '$Customer_ID',
+                'Customer_name': '$Customer_Name',
             }
         }
     }, {
         '$project': {
             '_id': 0, 
             'customerID': '$_id.Customer_ID', 
-            'customerName': '$_id.Customer_name', 
-            'customerSegment': '$_id.Customer_segment'
+            'customerName': '$_id.Customer_name'
         }
     }, {
         '$sort': {
@@ -91,7 +91,7 @@ def compras_categoria(pagina):
     ])
     return result
 
-def items_cliente_categoria():
+def items_cliente_categoria(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$project': {
@@ -110,11 +110,16 @@ def items_cliente_categoria():
                 '$push': '$$ROOT'
             }
         }
-    }
+    }, {
+                '$skip': int(pagina)*25
+            },
+        {
+            '$limit': 25
+        }
     ])
     return result 
 
-def listado_productos_categoria():
+def listado_productos_categoria(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$project': {
@@ -130,11 +135,16 @@ def listado_productos_categoria():
                 '$push': '$$ROOT'
             }
         }
-    }
+    }, {
+                '$skip': int(pagina)*25
+            },
+        {
+            '$limit': 25
+        }
     ])
     return result
 
-def listado_productos_departamento():
+def listado_productos_departamento(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$project': {
@@ -150,11 +160,16 @@ def listado_productos_departamento():
                 '$push': '$$ROOT'
             }
         }
-    }
+    }, {
+                '$skip': int(pagina)*25
+            },
+        {
+            '$limit': 25
+        }
     ])
     return result
 
-def productos_maxvendidos_categoria():
+def productos_maxvendidos_categoria(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$match': {
@@ -180,12 +195,15 @@ def productos_maxvendidos_categoria():
             'number': -1
         }
     }, {
-        '$limit': 1
-    }
+                '$skip': int(pagina)*25
+            },
+        {
+            '$limit': 25
+        }
     ])
     return result
 
-def productos_maxvendidos_departamento():
+def productos_maxvendidos_departamento(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$match': {
@@ -211,12 +229,15 @@ def productos_maxvendidos_departamento():
             'number': -1
         }
     }, {
-        '$limit': 1
-    }
+                '$skip': int(pagina)*25
+            },
+        {
+            '$limit': 1
+        }
     ])
     return result
 
-def productos_maxcaros_categoria():
+def productos_maxcaros_categoria(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$group': {
@@ -235,7 +256,7 @@ def productos_maxcaros_categoria():
     ])
     return result
 
-def productos_maxcaros_departamento():
+def productos_maxcaros_departamento(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$group': {
@@ -254,7 +275,7 @@ def productos_maxcaros_departamento():
     ])
     return result
 
-def productos_maxvendidos_fecha():
+def productos_maxvendidos_fecha(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$addFields': {
@@ -296,7 +317,7 @@ def productos_maxvendidos_fecha():
     ])
     return result
 
-def items_comprado_cliente_fecha():
+def items_comprado_cliente_fecha(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$addFields': {
@@ -332,11 +353,16 @@ def items_comprado_cliente_fecha():
         '$sort': {
             'Customer_ID': -1
         }
-    }
+    }, {
+                '$skip': int(pagina)*25
+            },
+        {
+            '$limit': 1
+        }
     ])
     return result
 
-def total_ventas_zona():
+def total_ventas_zona(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$group': {
@@ -355,11 +381,16 @@ def total_ventas_zona():
         '$sort': {
             'Num_sales': -1
         }
-    }
+    }, {
+                '$skip': int(pagina)*25
+            },
+        {
+            '$limit': 25
+        }
     ])
     return result
 
-def zona_max_compras():
+def zona_max_compras(pagina):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$group': {

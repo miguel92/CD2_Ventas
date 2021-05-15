@@ -19,6 +19,7 @@
 
                             html = '<table class="table"><thead><tr><th scope="col">#</th><th scope="col">Categoria</th><th scope="col">Numero de ventas</th></thead>';
                             html += '<tbody>';
+                            console.log(Object.keys(obj.datos[0]))
                             for(var i = 0; i < obj.datos.length;i++){
                                 html += '<tr><th scope="row">'+i+'</th><td>'+obj.datos[i].Category+'</td><td>'+obj.datos[i].Num_sales+'</td></tr>';
                             }
