@@ -151,11 +151,11 @@
                 fd.append('pagina',pagina);
                 fd.append('consulta',consulta);
 
-                if(consulta == 3){
+                if(consulta == 3 || consulta == 5){
                                 var filtro = prompt("Introduce la categoria");
                                 console.log(filtro);
                                 fd.append('filtro', filtro);
-                }else if(consulta == 4){
+                }else if(consulta == 4 || consulta == 6){
                                 var filtro = prompt("Introduce el departamento");
                                 console.log(filtro);
                                 fd.append('filtro', filtro);
@@ -209,6 +209,40 @@
                                         for(var j = 0; j < obj.datos[i].Items.length;j++){
                                             html += '<li>' +obj.datos[i].Items[j].Item + ' </li>';
                                         }
+                                        html +='</ul></td>'
+                                        html +='</tr>'
+                                }
+                            }else if (obj.consulta == 6){
+                                html +='<th scope="col">num_ventas</th>';
+                                html +='<th scope="col">Departamento</th>';
+                                html +='<th scope="col">Item</th>';
+                                html +='</tr></thead>';
+                                html += '<tbody>';
+
+                                for(var i = 0; i < obj.datos.length;i++){
+                                        html += '<tr>'
+                                        html += '<th scope="row">'+i+'</th>'
+                                        html += '<th scope="row">'+obj.datos[i].num_ventas+'</th>'
+                                        html += '<td scope="row">'+obj.datos[i].Departamento+'</td>';
+                                        html +='<td><ul>';
+                                        html += '<li>' +obj.datos[i].Item + ' </li>';
+                                        html +='</ul></td>'
+                                        html +='</tr>'
+                                }
+                            }else if (obj.consulta == 5){
+                                html +='<th scope="col">num_ventas</th>';
+                                html +='<th scope="col">Categoria</th>';
+                                html +='<th scope="col">Item</th>';
+                                html +='</tr></thead>';
+                                html += '<tbody>';
+
+                                for(var i = 0; i < obj.datos.length;i++){
+                                        html += '<tr>'
+                                        html += '<th scope="row">'+i+'</th>'
+                                        html += '<th scope="row">'+obj.datos[i].num_ventas+'</th>'
+                                        html += '<td scope="row">'+obj.datos[i].Categoria+'</td>';
+                                        html +='<td><ul>';
+                                        html += '<li>' +obj.datos[i].Item + ' </li>';
                                         html +='</ul></td>'
                                         html +='</tr>'
                                 }

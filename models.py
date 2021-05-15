@@ -184,11 +184,11 @@ def listado_productos_departamento(pagina, filtro):
     ])
     return result
 
-def productos_maxvendidos_categoria(pagina):
+def productos_maxvendidos_categoria(pagina,filtro):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$match': {
-            'Category': 'Storage & Organization'
+            'Category': filtro
         }
     }, {
         '$group': {
@@ -220,11 +220,11 @@ def productos_maxvendidos_categoria(pagina):
     ])
     return result
 
-def productos_maxvendidos_departamento(pagina):
+def productos_maxvendidos_departamento(pagina, filtro):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$match': {
-            'Department': 'Office Supplies'
+            'Department': filtro
         }
     }, {
         '$group': {
