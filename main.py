@@ -98,6 +98,7 @@ def consultas_filter():
         filtro = None
 
         filtro = request.form['filtro']
+        filtro2 = request.form['filtro2']
         response = lista_consulta(consulta,pagina,filtro)
         list_cur = list(response)
     obj = {"datos": list_cur,"cur_pagina":pagina, "consulta": consulta, "max_pagina":672}

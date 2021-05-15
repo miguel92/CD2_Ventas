@@ -150,17 +150,23 @@
 		        var consulta = $(this).attr("data-consulta");
                 fd.append('pagina',pagina);
                 fd.append('consulta',consulta);
+                var filtro = ""
+                var filtro2 = ""
 
                 if(consulta == 3 || consulta == 5){
                                 var filtro = prompt("Introduce la categoria");
-                                console.log(filtro);
-                                fd.append('filtro', filtro);
                 }else if(consulta == 4 || consulta == 6){
                                 var filtro = prompt("Introduce el departamento");
-                                console.log(filtro);
-                                fd.append('filtro', filtro);
+                }else if(consulta == 9){
+                        var filtro = prompt("Introduce la fecha (dd-mm-yyyy)");
                 }
+                else if(consulta == 10){
+                        var filtro = prompt("Introduce la fecha (dd-mm-yyyy)");
+                        var filtro2 = prompt("Introduce el ID del cliente");
 
+                }
+                fd.append('filtro', filtro);
+                fd.append('filtro2', filtro2);
 
                 $.ajax({
 		            url: '/consultas_filter',
@@ -243,6 +249,37 @@
                                         html += '<td scope="row">'+obj.datos[i].Categoria+'</td>';
                                         html +='<td><ul>';
                                         html += '<li>' +obj.datos[i].Item + ' </li>';
+                                        html +='</ul></td>'
+                                        html +='</tr>'
+                                }
+                            }
+                            else if (obj.consulta == 9){
+                                html +='<th scope="col">Numero Ventas</th>';
+                                html +='<th scope="col">Item</th>';
+                                html +='</tr></thead>';
+                                html += '<tbody>';
+
+                                for(var i = 0; i < obj.datos.length;i++){
+                                        html += '<tr>'
+                                        html += '<th scope="row">'+i+'</th>'
+                                        html += '<th scope="row">'+obj.datos[i].number+'</th>'
+                                        html += '<td scope="row">'+obj.datos[i].Item+'</td>';
+                                        html +='</tr>'
+                                }
+                            }else if (obj.consulta == 10){
+                                html +='<th scope="col">ID Cliente</th>';
+                                html +='<th scope="col">Items</th>';
+                                html +='</tr></thead>';
+                                html += '<tbody>';
+
+                                for(var i = 0; i < obj.datos.length;i++){
+                                        html += '<tr>'
+                                        html += '<th scope="row">'+i+'</th>'
+                                        html += '<th scope="row">'+obj.datos[i].Customer_ID+'</th>'
+                                        html +='<td><ul>';
+                                        for(var j = 0; j < obj.datos[i].Items.length;j++){
+                                            html += '<li>' +obj.datos[i].Items[j].Item + ' </li>';
+                                        }
                                         html +='</ul></td>'
                                         html +='</tr>'
                                 }

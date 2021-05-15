@@ -49,7 +49,7 @@ def productos_maxvendidos_por_fecha(pagina):
     datos = productos_maxvendidos_fecha(pagina)
     return datos
 
-def items_comprado_cliente_por_fecha(pagina):
+def items_comprado_cliente_por_fecha(pagina,filtro,filtro2):
     datos = items_comprado_cliente_fecha(pagina)
     return datos
 
@@ -74,7 +74,7 @@ def zona_max_compra(pagina):
     return datos
 
 
-def lista_consulta(consulta, pagina, filtro = None):
+def lista_consulta(consulta, pagina, filtro = None, filtro2= None):
     consulta = int(consulta)
     if consulta == 0: # Listado Clientes
         return listado_clients(pagina)
@@ -95,9 +95,9 @@ def lista_consulta(consulta, pagina, filtro = None):
     elif consulta == 8:
         return productos_maxcaros_departamento(pagina)
     elif consulta == 9:
-        return productos_maxvendidos_fecha(pagina)
+        return productos_maxvendidos_fecha(pagina,filtro)
     elif consulta == 10:
-        return items_comprado_cliente_fecha(pagina)
+        return items_comprado_cliente_fecha(pagina,filtro,filtro2)
     elif consulta == 11:
         return total_ventas_por_zona(pagina)
     elif consulta == 12: # Total de ventas por zona
