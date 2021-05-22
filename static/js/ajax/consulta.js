@@ -287,7 +287,7 @@
                                     }
                                     html +='</select>'
                                     html +='</div>'
-                                }else{
+                                }else if(consulta == 10){
                                     html +='<div class="col-lg-5">'
                                     html +=' <select id="filtro" class="form-select" aria-label=".form-select-sm example">'
                                     for(var i = 0; i < obj.datos.length;  i++){
