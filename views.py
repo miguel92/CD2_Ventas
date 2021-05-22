@@ -123,3 +123,7 @@ def get_info_select(consulta):
         return todos_departamentos()
     elif consulta == 10:
         return todos_clientes()
+
+def get_productos_recomendados_views(Categoria, Item):
+    datos = get_productos_recomendados(Categoria, Item)
+    return datos

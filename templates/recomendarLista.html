@@ -9,8 +9,8 @@
     estamos seguros de que estos productos le podrían interesar:
   </p>
   <ul style="margin-left: 40px;" >
-  {% for value in datos %}
-    <li>{{value['Item']}}</li>
+  {% for i in range(5) %}
+    <li>{{datos[i]}}</li>
   {% endfor %}
   </ul>
   <p>Gracias por la confianza depositada en nosotros, ¡un saludo!</p>

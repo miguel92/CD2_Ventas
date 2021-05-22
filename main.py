@@ -35,8 +35,11 @@ def seleccionar(customerID):
 
 @app.route('/recomendar/customerID=<customerID>/category=<Category>/product=<Item>', methods=['POST', 'GET'])
 def recomendar(customerID, Category, Item):  
-    productos = productos_categoria_recomendar_cliente(Category, Item)
-    return render_template('recomendarLista.html', datos=productos)
+    cliente = get_nombre_by_id(customerID)    
+    #productos = productos_categoria_recomendar_cliente(Category, Item)
+    productos = get_productos_recomendados_views(Category, Item)
+    print(productos)
+    return render_template('recomendarLista.html', datos=productos, cliente=cliente, producto_pasado=Item)
 
 
 
@@ -68,8 +71,7 @@ def consultas_filter():
 
         filtro = request.form['filtro']
         filtro2 = request.form['filtro2']
-        print(filtro)
-        print(filtro2)
+        
         response = lista_consulta(consulta,pagina,filtro, filtro2)
         list_cur = list(response)
     obj = {"datos": list_cur,"cur_pagina":pagina, "consulta": consulta, "max_pagina":672}

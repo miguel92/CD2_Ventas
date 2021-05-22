@@ -113,8 +113,7 @@
 		            processData: false,
 		            success: function(response){
 		                if(response != 0){
-                            var obj = JSON.parse(response)
-
+                            var obj = JSON.parse(response)   
                             html = '<table class="table"><thead><tr>';
                             html += '<th scope="row">#</th>'
 
@@ -130,7 +129,7 @@
                                         html += '<td scope="row">'+obj.datos[i]._id.Category+'</td>';
                                         html +='<td><ul>';
                                         for(var j = 0; j < obj.datos[i].Items.length;j++){
-                                            html += '<li>' +obj.datos[i].Items[j].Item + ' </li>';
+                                            html += '<li>' +obj.datos[i].Items[j]._id + ' </li>';
                                         }
                                         html +='</ul></td>'
                                         html +='</tr>'
@@ -145,10 +144,10 @@
                                 for(var i = 0; i < obj.datos.length;i++){
                                         html += '<tr>'
                                         html += '<th scope="row">'+i+'</th>'
-                                        html += '<td scope="row">'+obj.datos[i]._id.Departament+'</td>';
+                                        html += '<td scope="row">'+obj.datos[i]._id.Department+'</td>';
                                         html +='<td><ul>';
                                         for(var j = 0; j < obj.datos[i].Items.length;j++){
-                                            html += '<li>' +obj.datos[i].Items[j].Item + ' </li>';
+                                            html += '<li>' +obj.datos[i].Items[j]._id + ' </li>';
                                         }
                                         html +='</ul></td>'
                                         html +='</tr>'

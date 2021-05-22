@@ -124,16 +124,34 @@ def items_cliente_categoria(pagina):
 
 def listado_productos_categoria(pagina,filtro):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
-        {
-            '$match': {
-                'Category': filtro
-            }
-        },
-        {
-
+    {
+        '$match': {
+            'Category': filtro
+        }
+    }, {
         '$project': {
             'Category': 1, 
             'Item': 1
+        }
+    }, {
+        '$group': {
+            '_id': {
+                'Category': '$Category'
+            }, 
+            'Items': {
+                '$push': '$$ROOT'
+            }
+        }
+    }, {
+        '$unwind': {
+            'path': '$Items'
+        }
+    }, {
+        '$group': {
+            '_id': '$Items.Item', 
+            'Category': {
+                '$first': '$_id.Category'
+            }
         }
     }, {
         '$group': {
@@ -150,17 +168,16 @@ def listado_productos_categoria(pagina,filtro):
         {
             '$limit': 25
         }
-    ])
+    ])  
     return result
 
 def listado_productos_departamento(pagina, filtro):
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
-        {
-            '$match': {
-                'Department': filtro
-            }
-        },
-        {
+    {
+        '$match': {
+            'Department': filtro
+        }
+    }, {
         '$project': {
             'Department': 1, 
             'Item': 1
@@ -168,7 +185,27 @@ def listado_productos_departamento(pagina, filtro):
     }, {
         '$group': {
             '_id': {
-                'Departament': '$Department'
+                'Department': '$Department'
+            }, 
+            'Items': {
+                '$push': '$$ROOT'
+            }
+        }
+    }, {
+        '$unwind': {
+            'path': '$Items'
+        }
+    }, {
+        '$group': {
+            '_id': '$Items.Item', 
+            'Department': {
+                '$first': '$_id.Department'
+            }
+        }
+    }, {
+        '$group': {
+            '_id': {
+                'Department': '$Department'
             }, 
             'Items': {
                 '$push': '$$ROOT'
@@ -180,7 +217,7 @@ def listado_productos_departamento(pagina, filtro):
         {
             '$limit': 25
         }
-    ])
+    ]) 
     return result
 
 def productos_maxvendidos_categoria(pagina,filtro):
@@ -623,3 +660,59 @@ def get_clientes():
         ]
     )
     return result
+
+def get_productos_recomendados(Categoria, Item):
+    result = client['Tienda']['Ventas_Cleaned'].aggregate([
+        {
+            '$match': {
+                'Item': Item
+            }
+        }, {
+            '$group': {
+                '_id': '$Customer_ID'
+            }
+        }
+    ]) 
+    cont=0
+    lista_items=[]
+    for value in result:
+        temp = get_items_cliente_categoria(value['_id'], Categoria, Item)  
+        if temp != []:
+            if temp[0]['_id'] not in lista_items:
+                cont = cont + 1
+                lista_items.append(temp[0]['_id'])
+        if cont==5:
+            break
+
+    if cont != 5:
+        restante = 5 - cont
+        print(cont)
+        lista = list(listado_productos_categoria(0,Categoria))
+        for value in lista[0]['Items']:
+            if restante < 0:
+                break
+            if value['Item'] not in lista_items:
+                lista_items.append(value['Item'])
+                restante = restante - 1
+    return lista_items
+
+def get_items_cliente_categoria(Customer_id, Categoria, Item):
+    result = client['Tienda']['Ventas_Cleaned'].aggregate([
+    {
+        '$match': {
+            'Category': Categoria, 
+            'Customer_ID': Customer_id, 
+            'Item': {
+                '$ne': Item
+            }
+        }
+    }, {
+        '$group': {
+            '_id': '$Item'
+        }
+    }, {
+        '$limit': 1
+    }
+    ]) 
+
+    return list(result)
