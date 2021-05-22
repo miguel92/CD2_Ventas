@@ -123,7 +123,6 @@ def items_cliente_categoria(pagina):
     return result 
 
 def listado_productos_categoria(pagina,filtro):
-    print(filtro)
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
         {
             '$match': {
@@ -155,7 +154,6 @@ def listado_productos_categoria(pagina,filtro):
     return result
 
 def listado_productos_departamento(pagina, filtro):
-    print(filtro)
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
         {
             '$match': {

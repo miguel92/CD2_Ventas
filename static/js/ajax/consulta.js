@@ -16,9 +16,7 @@
 		            processData: false,
 		            success: function(response){
 		                if(response != 0){
-		                console.log(response)
                             var obj = JSON.parse(response)
-                            console.log(obj);
                             html = '<table class="table"><thead><tr>';
                             html += '<th scope="row">#</th>'
 
@@ -116,7 +114,6 @@
 		            success: function(response){
 		                if(response != 0){
                             var obj = JSON.parse(response)
-                            console.log(obj);
 
                             html = '<table class="table"><thead><tr>';
                             html += '<th scope="row">#</th>'
@@ -268,7 +265,6 @@
 		            processData: false,
 		            success: function(response){
                         var obj = JSON.parse(response);
-                        console.log(obj);
 
                                 var html = "<form>"
                                 html +='<div class="row">'
