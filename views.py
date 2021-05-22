@@ -95,7 +95,7 @@ def lista_consulta(consulta, pagina, filtro = None, filtro2= None):
     elif consulta == 8:
         return productos_maxcaros_departamento(pagina)
     elif consulta == 9:
-        return productos_maxvendidos_fecha(pagina,filtro)
+        return productos_maxvendidos_fecha(pagina,filtro2)
     elif consulta == 10:
         return items_comprado_cliente_fecha(pagina,filtro,filtro2)
     elif consulta == 11:
@@ -103,3 +103,23 @@ def lista_consulta(consulta, pagina, filtro = None, filtro2= None):
     elif consulta == 12: # Total de ventas por zona
         return zona_max_compras(pagina)
 
+
+def todas_categorias():
+    return get_categorias()
+
+
+def todos_departamentos():
+    return get_departamentos()
+
+
+def todos_clientes():
+    return get_clientes()
+
+
+def get_info_select(consulta):
+    if consulta == 3 or consulta == 5:
+        return todas_categorias()
+    elif consulta == 4 or consulta == 6:
+        return todos_departamentos()
+    elif consulta == 10:
+        return todos_clientes()

@@ -97,21 +97,13 @@
 		        var consulta = $(this).attr("data-consulta");
                 fd.append('pagina',pagina);
                 fd.append('consulta',consulta);
-                var filtro = ""
+                var filtro = $('#filtro').val();
                 var filtro2 = ""
 
-                if(consulta == 3 || consulta == 5){
-                                var filtro = prompt("Introduce la categoria");
-                }else if(consulta == 4 || consulta == 6){
-                                var filtro = prompt("Introduce el departamento");
-                }else if(consulta == 9){
-                        var filtro = prompt("Introduce la fecha (dd-mm-yyyy)");
+                if (consulta == 9 || consulta == 10){
+                    filtro2 = $('#filtro2').val();
                 }
-                else if(consulta == 10){
-                        var filtro = prompt("Introduce la fecha (dd-mm-yyyy)");
-                        var filtro2 = prompt("Introduce el ID del cliente");
 
-                }
                 fd.append('filtro', filtro);
                 fd.append('filtro2', filtro2);
 
@@ -123,7 +115,6 @@
 		            processData: false,
 		            success: function(response){
 		                if(response != 0){
-		                console.log(response)
                             var obj = JSON.parse(response)
                             console.log(obj);
 
@@ -251,7 +242,7 @@
                                 }
                                 html +='</ul></nav>';
                             }
-                            $('#contenido_consulta').html(html);
+                            $('#contenido_consulta_filter').html(html);
                             var actual = parseInt(obj.cur_pagina);
                             $("[data-page="+actual+"]").parent().addClass("active")
                             asignarEvento();
@@ -262,3 +253,61 @@
 		        });
 
     }) }
+
+    function eventoFormulario (){$('.consulta_filter_pre').click(function(evt){
+        evt.preventDefault();
+        var consulta = $(this).attr('data-consulta')
+        var fd = new FormData();
+        fd.append('consulta',consulta);
+
+        $.ajax({
+		            url: '/info_select',
+		            type: 'post',
+		            data: fd,
+		            contentType: false,
+		            processData: false,
+		            success: function(response){
+                        var obj = JSON.parse(response);
+                        console.log(obj);
+
+                                var html = "<form>"
+                                html +='<div class="row">'
+
+                                if (consulta == 10 || consulta == 9){
+                                    html += '<div class="col-lg-5">'
+                                    html +='    <input id="filtro2" class="form-control" type="date" value="" id="example-datetime-local-input">'
+                                    html +='</div>'
+                                }
+
+                                if(consulta != 9 && consulta != 10){
+                                    html +='<div class="col-lg-5">'
+                                    html +=' <select id="filtro" class="form-select" aria-label=".form-select-sm example">'
+                                    for(var i = 0; i < obj.datos.length;  i++){
+                                    html +='<option>'+obj.datos[i]._id+'</option>'
+                                    }
+                                    html +='</select>'
+                                    html +='</div>'
+                                }else{
+                                    html +='<div class="col-lg-5">'
+                                    html +=' <select id="filtro" class="form-select" aria-label=".form-select-sm example">'
+                                    for(var i = 0; i < obj.datos.length;  i++){
+                                    html +='<option value="'+obj.datos[i]._id.Customer_ID+'">'+obj.datos[i]._id.Customer_Name+'</option>'
+                                    }
+                                    html +='</select>'
+                                    html +='</div>'
+                                }
+                                html +='<div class="col-lg-2">'
+                                html +='<input class="consulta_filter btn btn-info" data-consulta="'+consulta+'" data-page="0" type="submit" value="Lanzar">'
+                                html +='</div>'
+                                html += '</form>'
+                                html +='</div>'
+                                html += '<div id="contenido_consulta_filter"></div>'
+                                $('#contenido_consulta').html(html);
+                                asignarEventoFilter();
+		            }
+		            });
+
+
+    })}
+
+    eventoFormulario()

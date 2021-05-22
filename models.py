@@ -360,9 +360,9 @@ def productos_maxcaros_departamento(pagina):
 
 def productos_maxvendidos_fecha(pagina,filtro):
     filtroSplit = filtro.split('-')
-    dia = int(filtroSplit[0])
+    dia = int(filtroSplit[2])
     mes = int(filtroSplit[1])
-    ano = int(filtroSplit[2])
+    ano = int(filtroSplit[0])
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$addFields': {
@@ -405,10 +405,10 @@ def productos_maxvendidos_fecha(pagina,filtro):
     return result
 
 def items_comprado_cliente_fecha(pagina, filtro, filtro2):
-    filtroSplit = filtro.split('-')
-    dia = int(filtroSplit[0])
+    filtroSplit = filtro2.split('-')
+    dia = int(filtroSplit[2])
     mes = int(filtroSplit[1])
-    ano = int(filtroSplit[2])
+    ano = int(filtroSplit[0])
     result = client['Tienda']['Ventas_Cleaned'].aggregate([
     {
         '$addFields': {
@@ -424,7 +424,7 @@ def items_comprado_cliente_fecha(pagina, filtro, filtro2):
             'Fecha_ISO': {
                 '$gt': datetime(ano, mes, dia, 0, 0, 0, tzinfo=timezone.utc)
             },
-            'Customer_ID': int(filtro2)
+            'Customer_ID': int(filtro)
         }
     }, {
         '$group': {
@@ -573,3 +573,55 @@ def get_nombre_by_id(customerID):
     )
     list_cur = list(result)
     return list_cur
+
+
+def get_categorias():
+    result = client['Tienda']['Ventas_Cleaned'].aggregate(
+        [
+            {
+                '$group': {
+                    '_id': '$Category'
+                }
+            }, {
+            '$sort': {
+                '_id': 1
+            }
+        }
+        ]
+    )
+    return result
+
+def get_departamentos():
+    result = client['Tienda']['Ventas_Cleaned'].aggregate(
+        [
+            {
+                '$group': {
+                    '_id': '$Department'
+                }
+            }, {
+            '$sort': {
+                '_id': 1
+            }
+        }
+        ]
+    )
+    return result
+
+def get_clientes():
+    result = client['Tienda']['Ventas_Cleaned'].aggregate(
+        [
+            {
+                '$group': {
+                    '_id': {
+                        'Customer_Name': '$Customer_Name',
+                        'Customer_ID': '$Customer_ID'
+                    }
+                }
+            }, {
+            '$sort': {
+                '_id': 1
+            }
+        }
+        ]
+    )
+    return result
