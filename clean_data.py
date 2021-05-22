@@ -52,6 +52,16 @@ dataFrame.rename(columns={"Customer Segment": "Customer_Segment"},inplace=True)
 dataFrame.rename(columns={"Ship Date": "Ship_Date"},inplace=True)
 dataFrame.rename(columns={"Country / Region": "Country_Region"},inplace=True)
 
+#Quitar los ?
+dataFrame["Item"]=dataFrame["Item"].astype(str)
+
+dataFrame["Department"] = dataFrame["Department"].str.replace(u"\uFFFD", '')
+dataFrame["Category"] = dataFrame["Category"].str.replace(u"\uFFFD", '')
+dataFrame["Item"] = dataFrame["Item"].str.replace(u"\uFFFD", '')
+dataFrame["Customer_Segment"] = dataFrame["Customer_Segment"].str.replace(u"\uFFFD", '')
+dataFrame["Customer_Name"] = dataFrame["Customer_Name"].str.replace(u"\uFFFD", '')
+dataFrame["Country_Region"] = dataFrame["Country_Region"].str.replace(u"\uFFFD", '')
+
 #Conversión de vuelta a JSON para guardarla en un colección de MongoDB
 dataJSON = dataFrame.to_dict("records")
 collectionCleaned = client['Tienda']['Ventas_Cleaned']
