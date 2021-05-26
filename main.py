@@ -38,7 +38,6 @@ def recomendar(customerID, Category, Item):
     cliente = get_nombre_by_id(customerID)    
     #productos = productos_categoria_recomendar_cliente(Category, Item)
     productos = get_productos_recomendados_views(Category, Item)
-    print(productos)
     return render_template('recomendarLista.html', datos=productos, cliente=cliente, producto_pasado=Item)
 
 

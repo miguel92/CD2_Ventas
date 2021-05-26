@@ -683,16 +683,14 @@ def get_productos_recomendados(Categoria, Item):
                 lista_items.append(temp[0]['_id'])
         if cont==5:
             break
-
     if cont != 5:
         restante = 5 - cont
-        print(cont)
         lista = list(listado_productos_categoria(0,Categoria))
         for value in lista[0]['Items']:
             if restante < 0:
                 break
-            if value['Item'] not in lista_items:
-                lista_items.append(value['Item'])
+            if value['_id'] not in lista_items:
+                lista_items.append(value['_id'])
                 restante = restante - 1
     return lista_items
 
